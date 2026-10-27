@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    for(int i=1;i<=9;i++){
+        int start;
+        if(i<=5){
+            start=i;
+        }
+        else{
+            start=10-i;
+        }
+        for(int j=1;j<=start;j++){
+                if(j<=i){
+                    cout<<j;
+                }
+                else{
+                    cout<<" ";   
+                }
+            }
+        cout<<endl;
+    }
+    return 0;
+}
