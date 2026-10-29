@@ -553,3 +553,230 @@ class Program
         display();
     }
 }   
+
+
+# What Is Exception Handling?
+->Exception handling is a mechanism in C# used to handle runtime errors so that a program can respond to errors instead of terminating unexpectedly.
+
+# What Is a Custom Exception?
+A custom exception is an exception class that you create to represent a specific error in your application.
+using System;
+
+class InvalidSalaryException : Exception
+{
+    public InvalidSalaryException(string message)
+        : base(message)
+    {
+    }
+}
+
+class Program
+{
+    static void CheckSalary(int salary)
+    {
+        if (salary < 0)
+        {
+            throw new InvalidSalaryException(
+                "Salary cannot be negative."
+            );
+        }
+    }
+
+    static void Main()
+    {
+        try
+        {
+            CheckSalary(-1000);
+        }
+        catch (InvalidSalaryException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+
+# What is exception handling in C#?
+->Exception handling is a mechanism used to handle runtime exceptions and prevent unexpected failures from going unhandled. C# provides try, catch, finally, and throw for exception handling.
+
+# What is the difference between throw and throws?
+-> C# uses the throw keyword to raise an exception. It does not use a throws keyword to declare exceptions as Java does.
+
+# What Are Checked and Unchecked Statements?
+In C#, checked and unchecked control how integer arithmetic overflow is handled.
+
+Overflow occurs when a calculation produces a value outside the range that a data type can store.
+- checked: Detects arithmetic overflow and throws an OverflowException in a checked context.
+- unchecked: Allows integer overflow without throwing an overflow exception; the result wraps around according to the type's representation.
+
+# What are the dos and don'ts of exception handling in C#?
+->In C#, we should catch specific exceptions when possible, use finally or using for resource cleanup, and log useful error details securely. We should avoid empty catch blocks, unnecessary exception handling, and using exceptions for normal program flow. When rethrowing an exception, we should use throw; to preserve the original stack trace.
+
+
+# What is an event in C#?
+->An event is a mechanism that allows an object to notify subscribed objects when something happens. Events are based on delegates and are commonly used for notifications and user-interface interactions.
+
+# What is the difference between declaring and raising an event?
+->Declaring an event defines a notification that subscribers can listen for. Raising an event triggers that notification and invokes the subscribed event handlers.
+
+# What is event handling in C#?
+
+Event handling is the process of responding to events using event-handler methods. In C#, we declare an event, subscribe a handler using +=, and raise the event to execute the subscribed handlers. Events are commonly used in button clicks, notifications, and communication between objects.
+
+# What is an anonymous type in C#?
+
+An anonymous type is a type created by the C# compiler without explicitly defining a class. We create an anonymous object using new with property initializers, and the compiler infers its type. Anonymous types are commonly used to represent temporary data and to select specific properties in LINQ queries. Their properties are read-only.
+
+# What is an extension method in C#?
+
+An extension method allows us to add a method to an existing type without modifying its source code or inheriting from it. It must be a static method defined inside a static class, and its first parameter uses the this keyword to specify the type being extended. Extension methods are commonly used in LINQ.
+
+# What is a partial class in C#?
+->A partial class allows us to split the definition of a single class across multiple files using the partial keyword. During compilation, the compiler combines all parts into one class. Partial classes are commonly used in large projects, Windows Forms applications, and automatically generated code.
+
+# What is a partial method in C#?
+
+A partial method allows us to declare a method in one part of a partial class and implement it in another part. It is useful when working with generated code and optional customization. Traditional private void partial methods can be left unimplemented, in which case the compiler removes the declaration and its calls.
+
+# What is LINQ to Objects?
+Interview-ready answer:
+
+LINQ to Objects is a LINQ feature that allows us to query in-memory collections such as arrays and lists. It provides methods like Where(), Select(), and OrderBy() to filter, transform, and sort data. It makes collection operations more readable and reduces the need for repetitive loops.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        List<int> numbers = new List<int> { 10, 5, 30, 15, 20, 25 };
+
+        var result = numbers
+            .Where(n => n > 10)
+            .OrderBy(n => n);
+
+        foreach (int number in result)
+        {
+            Console.WriteLine(number);
+        }
+    }
+}
+
+# LINQ queries
+LINQ queries in C# can be written using query syntax or method syntax. Query syntax uses keywords such as from, where, and select, whereas method syntax uses methods such as Where(), Select(), and OrderBy(). Both can be used to filter, select, and sort data from collections.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> students = new List<string>
+        {
+            "Amit", "Rahul", "Anita", "Rohan", "Akash"
+        };
+
+        var result = from name in students
+                     where name.StartsWith("A")
+                     select name;
+
+        foreach (string name in result)
+        {
+            Console.WriteLine(name);
+        }
+    }
+}
+
+# What is deferred execution in LINQ?
+
+Deferred execution means a LINQ query is not executed when it is defined. It executes when its results are enumerated or requested. For example, Where() and Select() typically use deferred execution. If the source collection changes before the query executes, the query may reflect those changes. We can use ToList() to execute the query immediately and store its results.
+
+# What is the difference between Where() and Select() in LINQ?
+
+Answer: Where() filters elements based on a condition, whereas Select() transforms each element into a new value or representation. For example, Where(n => n > 10) selects numbers greater than 10, while Select(n => n * 2) doubles every number.
+
+# What is PLINQ in C#?
+
+PLINQ stands for Parallel Language Integrated Query. It extends LINQ by enabling parallel query execution over collections. We can use the AsParallel() method to allow PLINQ to process data concurrently using multiple threads. It can improve performance for large, CPU-intensive workloads, but it may introduce overhead and does not guarantee the original result order unless we use AsOrdered().
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = Enumerable.Range(1, 10).ToArray();
+
+        var result = numbers
+            .AsParallel()
+            .Where(n => n % 2 == 0);
+
+        foreach (int n in result)
+        {
+            Console.WriteLine(n);
+        }
+    }
+}
+
+# What is a shared assembly in .NET?
+
+A shared assembly is a reusable .NET assembly that can be used by multiple applications. In traditional .NET Framework, a shared assembly is commonly strong-named and installed in the Global Assembly Cache (GAC). This allows multiple applications to reference the assembly without maintaining separate private copies in each application directory.
+
+# What is File I/O in C#?
+File I/O means reading data from files and writing data to files. C# provides classes such as File, FileStream, StreamReader, and StreamWriter in the System.IO namespace.
+
+# What is a stream?
+A stream is an abstraction representing a sequence of data flowing from a source to a destination. Streams allow applications to read and write data from files, memory, networks, and other sources.
+
+#  What is the difference between FileStream and StreamWriter?
+FileStream works directly with bytes, whereas StreamWriter provides convenient methods for writing text to a stream.
+
+# What is DriveInfo in C#?
+
+DriveInfo is a class in the System.IO namespace that provides information about storage drives, including their type, capacity, available space, and file system format.    
+
+# What is Threading?
+Threading is a technique that allows a program to execute multiple sequences of instructions concurrently.
+
+A thread is the smallest unit of execution that the operating system schedules within a process.
+
+using System;
+using System.Threading;
+
+class Program
+{
+    static void PrintNumbers()
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            Console.WriteLine(i);
+        }
+    }
+
+    static void Main()
+    {
+        Thread t1 = new Thread(PrintNumbers);
+
+        t1.Start();
+
+        Console.WriteLine("Main thread is running");
+    }
+}
+
+# What Is the Difference Between Start() and Join()?
+Start():Starts a thread so it can execute its assigned method.
+Join():Makes the calling thread wait until the specified thread finishes.
+
+
+# What Is Multithreading?
+Multithreading means using multiple threads within a single process to execute tasks concurrently.
+
+For example, an application might use separate threads for processing data and performing background
+
+# What is the Thread class?
+
+The Thread class in System.Threading represents a thread and provides methods to control its execution.
+
+# What is ThreadStart?
+->ThreadPool is a collection of reusable worker threads that execute tasks without requiring you to create a new thread manually for every task.
